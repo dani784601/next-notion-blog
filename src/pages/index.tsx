@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { getAllPosts } from '../../lib/notionAPI';
-import Link from 'next/link';
+import PostCard from '@/components/PostCard';
+import { Post } from '@/types/Post';
 
 export const getStaticProps = async () => {
   const allPosts = await getAllPosts();
@@ -9,14 +10,6 @@ export const getStaticProps = async () => {
       allPosts,
     }
   }
-}
-
-type Post = {
-  id: string;
-  title: string;
-  date: string;
-  slug: string;
-  tags: string;
 }
 
 export default function Home({ allPosts } : { allPosts: Post[]}) {
@@ -28,25 +21,14 @@ export default function Home({ allPosts } : { allPosts: Post[]}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className="container min-w-full px-4">
-          <h1 className='py-10 font-mono text-5xl text-center'>Notion Blog 🫠</h1>
-          <section className='grid gap-3 md:grid-cols-2'>
+        <div className="container min-w-full px-8">
+          <div className='flex items-center justify-center gap-1 text-5xl'>
+            <h1 className='py-10 font-mono text-center'>Notion Blog</h1>
+            <div className="hover:animate-spin">🥕</div>
+          </div>
+          <section className='grid max-w-4xl gap-2 mx-auto place-items-center md:grid-cols-2'>
           {
-            allPosts.map((post: Post) => {
-              return (
-                <article key={post.id} className='shadow-xl card'>
-                <div className='card-body'>
-                    <div className="card-title">
-                      <Link href={`/posts/${post.slug}`}>
-                        <h2 className='font-semibold'>{post.title}</h2>
-                      </Link>
-                      <span className='rounded-full badge-primary'>{post.tags}</span>
-                    </div>
-                    <span>{post.date}</span>
-                </div>
-                </article>
-                )
-          })
+            allPosts.map((post: Post) => <PostCard post={post} key={post.id} />)
           }
           </section>
         </div>
