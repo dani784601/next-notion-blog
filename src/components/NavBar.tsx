@@ -46,7 +46,7 @@ function Menu({props} : {props : Menus}) {
       {props.type === 'in' ? (
         <Link href={props.url}>{props.label}</Link>
       ) : (
-        <a href={props.url}>{props.label}</a>
+        <a href={props.url} target='_blank'>{props.label}</a>
       )}
     </li>
   );
