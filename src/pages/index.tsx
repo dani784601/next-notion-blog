@@ -1,14 +1,16 @@
 import Head from 'next/head'
 import { getAllPosts } from '../../lib/notionAPI';
 import PostCard from '@/components/PostCard';
-import { Post } from '@/types/Post';
+import type { Post } from '@/types/post';
 
+// ISA 사용(6시간마다 갱신)
 export const getStaticProps = async () => {
   const allPosts = await getAllPosts();
   return {
     props: {
       allPosts,
-    }
+    },
+    revalidate: 60 * 60 * 6
   }
 }
 
