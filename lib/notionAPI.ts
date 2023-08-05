@@ -52,6 +52,6 @@ export const getSinglePost = async (slug: string) => {
 
   return {
     metadata,
-    markdown: mdString.parent,
+    markdown: mdString.parent ?? '', // 본문 내용이 존재하지 않을 경우(null or undefined) 빈문자열('')로 대체
   };
 };

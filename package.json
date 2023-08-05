@@ -26,6 +26,9 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
-    "daisyui": "^3.5.0"
+    "@tailwindcss/typography": "^0.5.9",
+    "@types/react-syntax-highlighter": "^15.5.7",
+    "daisyui": "^3.5.0",
+    "react-syntax-highlighter": "^15.5.0"
   }
 }
