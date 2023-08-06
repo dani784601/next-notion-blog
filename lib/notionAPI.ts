@@ -1,5 +1,6 @@
 import { Client } from '@notionhq/client';
 import { NotionToMarkdown } from 'notion-to-md';
+import { PAGE_SIZE } from '../constants/constants';
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
@@ -54,4 +55,20 @@ export const getSinglePost = async (slug: string) => {
     metadata,
     markdown: mdString.parent ?? '', // 본문 내용이 존재하지 않을 경우(null or undefined) 빈문자열('')로 대체
   };
+};
+
+export const getPostsByPage = async (currentPage = 1) => {
+  const allPosts = await getAllPosts();
+  const startIdx = (currentPage - 1) * PAGE_SIZE;
+  const endIdx = currentPage - 1 + PAGE_SIZE;
+  return allPosts.slice(startIdx, endIdx);
+};
+
+export const getNumberOfPage = async () => {
+  const allPosts = await getAllPosts();
+  if (allPosts.length % PAGE_SIZE > 0) {
+    return Math.floor(allPosts.length / PAGE_SIZE) + 1;
+  } else {
+    return Math.floor(allPosts.length / PAGE_SIZE);
+  }
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { getAllPosts, getSinglePost } from '../../../lib/notionAPI';
-import Badge from '@/components/Badge';
+import Badge from '../../components/Badge';
 import { matchTagAndColor } from '../../../utils';
 import ReactMarkdown from 'react-markdown';
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
@@ -44,7 +44,7 @@ export default function Post({
       </div>
       <div className='mt-5 prose lg:prose-xl prose-pre:bg-[#1E1E1E]'>
         <ReactMarkdown
-          children={post.markdown?.toString()}
+          children={post.markdown?.toString()} // eslint-disable-line react/no-children-prop
           components={{
             code({ node, inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || '');
@@ -52,7 +52,7 @@ export default function Post({
                 <SyntaxHighlighter
                   {...props}
                   style={vscDarkPlus}
-                  children={String(children).replace(/\n$/, '')}
+                  children={String(children).replace(/\n$/, '')} // eslint-disable-line react/no-children-prop
                   language={match[1]}
                   PreTag='div'
                 />

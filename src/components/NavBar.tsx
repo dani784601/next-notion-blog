@@ -20,7 +20,7 @@ const menus : Menus[] = [
   },
   {
     type: 'out',
-    url: 'mailto:"dani784601@gmail.com',
+    url: 'mailto:dani784601@gmail.com',
     label: 'contact',
   },
 ];
@@ -29,7 +29,7 @@ export default function NavBar() {
   return (
     <nav className='navbar'>
         <div className='flex-1 p-2 text-xl font-semibold'>
-          <Link href='/'>Dani</Link>
+          <Link href='/profile'>Dani</Link>
         </div>
         <div className='flex-none'>
           <ul className='px-1 menu menu-horizontal'>

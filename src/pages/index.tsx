@@ -1,37 +1,43 @@
-import Head from 'next/head'
-import { getAllPosts } from '../../lib/notionAPI';
-import PostCard from '@/components/PostCard';
+import Head from 'next/head';
+import { getAllPosts, getPostsByPage } from '../../lib/notionAPI';
+import PostCard from '../components/PostCard';
 import type { Post } from '@/types/post';
+import type { GetStaticProps } from 'next';
+import Link from 'next/link';
 
-// ISA 사용(6시간마다 갱신)
-export const getStaticProps = async () => {
-  const allPosts = await getAllPosts();
+export const getStaticProps: GetStaticProps = async () => {
+  const postByPage = await getPostsByPage();
   return {
     props: {
-      allPosts,
+      postByPage,
     },
-    revalidate: 60 * 60 * 6
-  }
-}
+    revalidate: 60 * 60 * 6, // ISA 사용(6시간마다 갱신)
+  };
+};
 
-export default function Home({ allPosts } : { allPosts: Post[]}) {
-  console.log('allPosts', allPosts);
+export default function Home({ postByPage }: { postByPage: Post[] }) {
+  console.log('postByPage', postByPage);
   return (
     <div>
       <Head>
         <title>Notion-Blog</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel='icon' href='/favicon.ico' />
       </Head>
       <main>
-        <div className="container min-w-full px-8">
-          <div className='flex items-center justify-center gap-1 text-5xl'>
-            <h1 className='py-10 font-mono text-center'>Notion Blog</h1>
-            <div className="hover:animate-spin">🥕</div>
-          </div>
+        <div className='container h-screen min-w-full px-8'>
+          <section className='flex items-center justify-center gap-1 text-5xl'>
+            <h1 className='py-10 font-mono text-center whitespace-nowrap'>Notion Blog</h1>
+            <div className='hover:animate-spin'>🥕</div>
+          </section>
           <section className='grid max-w-4xl gap-2 mx-auto place-items-center md:grid-cols-2'>
-          {
-            allPosts.map((post: Post) => <PostCard post={post} key={post.id} />)
-          }
+            {postByPage.map((post: Post) => (
+              <PostCard post={post} key={post.id} />
+            ))}
+          </section>
+          <section className='flex justify-center py-10'>
+            <Link className='btn' href='/posts/page/1'>
+              더보기
+            </Link>
           </section>
         </div>
       </main>

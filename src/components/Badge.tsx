@@ -8,7 +8,7 @@ type BadgeType = {
 export default function Badge({label, color} : BadgeType) {
   return (
     <span
-      className={`text-sm px-1 rounded-full ${color}`}
+      className={`text-sm px-1 rounded-full whitespace-nowrap ${color}`}
     >{label}
     </span>
   );

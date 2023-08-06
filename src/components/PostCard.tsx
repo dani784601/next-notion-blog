@@ -12,11 +12,9 @@ export default function PostCard({post} : {post: Post}) {
     >
       <div className='card-body'>
         <div className='card-title'>
-          <Link href={`/posts/${post.slug}`}>
-            <h2 className='font-semibold transition-colors hover:text-gray-500'>
-              {post.title} 
+            <h2 className='font-semibold transition-colors hover:text-gray-500 text-ellipsis whitespace-nowrap'>
+              <Link href={`/posts/${post.slug}`}>{post.title} </Link>
             </h2>
-          </Link>
           {post.tags.map((tag, idx) => (
             <Badge label={tag} color={matchTagAndColor(tag)} key={idx}/>
           ))}
