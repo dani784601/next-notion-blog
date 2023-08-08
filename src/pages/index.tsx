@@ -1,9 +1,9 @@
+import { getPostsByPage } from '@/lib/notionAPI';
 import Head from 'next/head';
-import { getAllPosts, getPostsByPage } from '../../lib/notionAPI';
-import PostCard from '../components/PostCard';
-import type { Post } from '@/types/post';
-import type { GetStaticProps } from 'next';
 import Link from 'next/link';
+import PostCard from '@/components/PostCard';
+import type { GetStaticProps } from 'next';
+import type { Post } from '@/types/post';
 
 export const getStaticProps: GetStaticProps = async () => {
   const postByPage = await getPostsByPage();

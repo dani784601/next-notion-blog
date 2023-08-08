@@ -1,8 +1,7 @@
+import { matchTagAndColor } from '@/utils';
+import Badge from '@/components/Badge';
 import Link from 'next/link';
-import React from 'react';
-import { Post } from '@/types/post';
-import Badge from './Badge';
-import { matchTagAndColor } from '../../utils';
+import type { Post } from '@/types/post';
 
 export default function PostCard({post} : {post: Post}) {
   return (

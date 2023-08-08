@@ -1,9 +1,8 @@
+import { getNumberOfPage, getPostsByPage } from '@/lib/notionAPI';
+import Pagination from '@/components/Pagination';
+import PostCard from '@/components/PostCard';
 import type { GetStaticPaths, GetStaticProps } from 'next';
-import { getAllPosts, getNumberOfPage, getPostsByPage } from '../../../../lib/notionAPI';
-import PostCard from '../../../components/PostCard';
 import type { Post } from '@/types/post';
-import { PAGE_SIZE } from '../../../../constants/constants';
-import Pagination from '../../../components/Pagination';
 
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -20,7 +19,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const numberOfPage = await getNumberOfPage();
-  const currentPage = Number(ctx.params?.page);
+  const currentPage = parseInt(ctx.params?.page?.toString() ?? '0');
   const postByPage = await getPostsByPage(currentPage);
   return {
     props: {
@@ -48,7 +47,7 @@ export default function BlogPageList({ postByPage, currentPage, numberOfPage }: 
           ))}
         </section>
         <section className="flex justify-center py-10">
-          <Pagination currentPage={Number(currentPage)} totalPage={numberOfPage} />
+          <Pagination currentPage={parseInt(currentPage)} totalPage={numberOfPage} />
         </section>
       </div>
     </main>

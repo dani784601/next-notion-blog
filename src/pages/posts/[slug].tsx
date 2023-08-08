@@ -1,10 +1,9 @@
-import React from 'react';
-import { getAllPosts, getSinglePost } from '../../../lib/notionAPI';
-import Badge from '../../components/Badge';
-import { matchTagAndColor } from '../../../utils';
-import ReactMarkdown from 'react-markdown';
-import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
+import { getAllPosts, getSinglePost } from '@/lib/notionAPI';
+import { matchTagAndColor } from '@/utils';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import Badge from '@/components/Badge';
+import ReactMarkdown from 'react-markdown';
 
 export const getStaticPaths = async () => {
   const allPosts = await getAllPosts();
@@ -32,7 +31,7 @@ export default function Post({
 }) {
   console.log('markdown', post.markdown);
   return (
-    <section className='container px-5 mx-auto mt-20 lg:px-2 lg:w-2/3'>
+    <section className='container px-5 mx-auto my-20 lg:px-2 lg:w-2/3'>
       <h2 className='w-full text-2xl font-bold'>{post.metadata.title}</h2>
       <hr className='my-1' />
       <span className='text-gray-500'>Posted date at {post.metadata.date}</span>
@@ -42,7 +41,7 @@ export default function Post({
           <Badge key={idx} color={matchTagAndColor(tag)} label={tag} />
         ))}
       </div>
-      <div className='mt-5 prose lg:prose-xl prose-pre:bg-[#1E1E1E]'>
+      <div className='mt-5 prose lg:prose-2xl prose-pre:bg-[#1E1E1E]'>
         <ReactMarkdown
           children={post.markdown?.toString()} // eslint-disable-line react/no-children-prop
           components={{

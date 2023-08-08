@@ -1,6 +1,6 @@
 import { Client } from '@notionhq/client';
 import { NotionToMarkdown } from 'notion-to-md';
-import { PAGE_SIZE } from '../constants/constants';
+import { PAGE_SIZE } from '@/constants/constants';
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
@@ -60,7 +60,7 @@ export const getSinglePost = async (slug: string) => {
 export const getPostsByPage = async (currentPage = 1) => {
   const allPosts = await getAllPosts();
   const startIdx = (currentPage - 1) * PAGE_SIZE;
-  const endIdx = currentPage - 1 + PAGE_SIZE;
+  const endIdx = startIdx + PAGE_SIZE;
   return allPosts.slice(startIdx, endIdx);
 };
 
@@ -71,4 +71,37 @@ export const getNumberOfPage = async () => {
   } else {
     return Math.floor(allPosts.length / PAGE_SIZE);
   }
+};
+
+export const getPostsByTagAndPage = async (
+  tagName: string,
+  currentPage: number
+) => {
+  const allPosts = await getAllPosts();
+  const posts = allPosts.filter((post) =>
+    post.tags.find((tag: string) => tag === tagName)
+  );
+  const startIdx = (currentPage - 1) * PAGE_SIZE;
+  const endIdx = startIdx + PAGE_SIZE;
+  return posts.slice(startIdx, endIdx);
+};
+
+export const getNumberOfPageByTag = async (tagName: string) => {
+  const allPosts = await getAllPosts();
+  const posts = allPosts.filter((post) =>
+    post.tags.find((tag: string) => tag === tagName)
+  );
+  if (posts.length % PAGE_SIZE > 0) {
+    return Math.floor(posts.length / PAGE_SIZE) + 1;
+  } else {
+    return Math.floor(posts.length / PAGE_SIZE);
+  }
+};
+
+export const getAllTags = async () => {
+  const allPosts = await getAllPosts();
+  const allTagsDuplicationLists = allPosts.flatMap((post) => post.tags);
+  const set = new Set(allTagsDuplicationLists);
+  const allTagsList = Array.from(set);
+  return allTagsList;
 };
