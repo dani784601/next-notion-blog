@@ -4,11 +4,9 @@ import PostCard from '@/components/PostCard';
 import type { GetStaticPaths, GetStaticProps } from 'next';
 import type { Post } from '@/types/post';
 
-
 export const getStaticPaths: GetStaticPaths = async () => {
   const allTagList = await getAllTags();
   let params: {params: {tag: string, page: string}}[] = [];
-  
   await Promise.all(
     allTagList.map((tagName:string) => {
       return getNumberOfPageByTag(tagName).then((numberOfPagesByTag:number) => {
@@ -18,9 +16,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       });
     })
   )
-
   console.log('params', params)
-
   return {
     paths: params,
     fallback: 'blocking',
@@ -30,20 +26,27 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const currentTag = ctx.params?.tag?.toString() ?? '';
   const currentPage = parseInt((ctx.params?.page?.toString() ?? '1'), 10) ;
+  const numberOfPageByTag = await getNumberOfPageByTag(currentTag);
   const posts = await getPostsByTagAndPage(currentTag, currentPage);
   return {
     props: {
       posts,
+      currentPage,
+      currentTag,
+      numberOfPageByTag
     },
     revalidate: 60 * 60 * 6, // ISA 사용(6시간마다 갱신)
   };
 };
 
 interface BlogTagListProps {
+  currentPage: number;
+  currentTag: string;
+  numberOfPageByTag: number;
   posts: Post[];
 }
 
-export default function BlogTagPageList({ posts }: BlogTagListProps) {
+export default function BlogTagPageList({ posts, currentPage, numberOfPageByTag, currentTag }: BlogTagListProps) {
   console.log('postByTag',posts)
   return (
     <main>
@@ -53,9 +56,9 @@ export default function BlogTagPageList({ posts }: BlogTagListProps) {
             <PostCard post={post} key={post.id} />
           ))}
         </section>
-        {/* <section className="flex justify-center py-10">
-          <Pagination currentPage={Number(currentPage)} totalPage={numberOfPage} />
-        </section> */}
+        <section className="flex justify-center py-10">
+          <Pagination currentPage={currentPage} totalPage={numberOfPageByTag} currentTag={currentTag} />
+        </section>
       </div>
     </main>
   );

@@ -1,20 +1,38 @@
-import Link from "next/link";
+import Link from 'next/link';
 
-export default function Pagination({currentPage = 1, totalPage = 1}) {
+type PaginationProps = {
+  currentPage: number;
+  totalPage: number;
+  currentTag?: string;
+};
+
+export default function Pagination({
+  currentPage = 1,
+  totalPage = 1,
+  currentTag,
+}: PaginationProps) {
   let pages = [];
-  for(let i = 1; i <= totalPage; i++) {
+  for (let i = 1; i <= totalPage; i++) {
     pages.push(i);
   }
-  
   return (
     <ul className='join'>
-      {
-        pages.map(page => (
+      {pages.map((page) => (
         <li key={page}>
-          <Link href={`/posts/page/${page}`} className={`join-item btn ${currentPage === page ? 'btn-active' : ''}`}>{page}</Link>
+          <Link
+            href={
+              currentTag
+                ? `/posts/tag/${currentTag}/page/${page}`
+                : `/posts/page/${page}`
+            }
+            className={`join-item btn ${
+              currentPage === page ? 'btn-active' : ''
+            }`}
+          >
+            {page}
+          </Link>
         </li>
-          ))
-      }
+      ))}
     </ul>
-  )
+  );
 }

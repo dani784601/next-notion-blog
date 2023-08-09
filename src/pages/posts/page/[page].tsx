@@ -33,7 +33,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
 interface BlogPageListProps {
   postByPage: Post[];
-  currentPage: string;
+  currentPage: number;
   numberOfPage: number;
 }
 
@@ -47,7 +47,7 @@ export default function BlogPageList({ postByPage, currentPage, numberOfPage }: 
           ))}
         </section>
         <section className="flex justify-center py-10">
-          <Pagination currentPage={parseInt(currentPage)} totalPage={numberOfPage} />
+          <Pagination currentPage={currentPage} totalPage={numberOfPage} />
         </section>
       </div>
     </main>
