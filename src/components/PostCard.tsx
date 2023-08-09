@@ -16,8 +16,9 @@ export default function PostCard({post} : {post: Post}) {
             </h2>
           {post.tags.map((tag, idx) => (
             <Badge label={tag} color={matchTagAndColor(tag)} key={idx}/>
-          ))}
+            ))}
         </div>
+        <p className='font-mono text-gray-500'>{post.date}</p>
       </div>
     </article>
   );
