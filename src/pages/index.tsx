@@ -26,8 +26,7 @@ export default function Home({ postByPage }: { postByPage: Post[] }) {
       <main>
         <div className='container h-screen min-w-full px-8'>
           <section className='flex items-center justify-center gap-1 text-5xl'>
-            <h1 className='py-10 font-mono text-center whitespace-nowrap'>Notion Blog</h1>
-            <div className='hover:animate-spin'>🥕</div>
+            <h1 className='py-10 font-mono text-center whitespace-nowrap'>Notion Blog🥕</h1>
           </section>
           <section className='grid max-w-4xl gap-2 mx-auto place-items-center md:grid-cols-2'>
             {postByPage.map((post: Post) => (

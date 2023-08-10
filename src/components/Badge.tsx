@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import Link from 'next/link';
 
 type BadgeType = {
   label?: string;
-  color?: 'badge-primary' | 'badge-secondary' | 'badge-accent'
-}
+  color?: 'badge-primary' | 'badge-secondary' | 'badge-accent';
+};
 
-export default function Badge({label, color} : BadgeType) {
+export default function Badge({ label, color }: BadgeType) {
   return (
-    <span
-      className={`text-sm px-1 rounded-full whitespace-nowrap ${color}`}
-    >{label}
+    <span className={`badge text-sm px-1 whitespace-nowrap ${color} hover:brightness-110`}>
+      <Link href={`/posts/tag/${label}/page/1`}>{label}</Link>
     </span>
   );
 }
