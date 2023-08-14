@@ -1,7 +1,7 @@
 import { matchTagAndColor } from '@/utils';
 import TagBadge from '@/components/TagBadge';
 import Link from 'next/link';
-import type { Post } from '@/types/post';
+import { Post } from '@/types/post';
 
 export default function PostCard({post} : {post: Post}) {
   return (
