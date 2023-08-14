@@ -1,5 +1,5 @@
 import { matchTagAndColor } from '@/utils';
-import Badge from '@/components/Badge';
+import TagBadge from '@/components/TagBadge';
 import Link from 'next/link';
 import type { Post } from '@/types/post';
 
@@ -15,7 +15,7 @@ export default function PostCard({post} : {post: Post}) {
               <Link href={`/posts/${post.slug}`}>{post.title} </Link>
             </h2>
           {post.tags.map((tag, idx) => (
-            <Badge label={tag} color={matchTagAndColor(tag)} key={idx}/>
+            <TagBadge label={tag} color={matchTagAndColor(tag)} key={idx}/>
             ))}
         </div>
         <p className='font-mono text-gray-500'>{post.date}</p>

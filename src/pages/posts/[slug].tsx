@@ -2,7 +2,7 @@ import { getAllPosts, getSinglePost } from '@/lib/notionAPI';
 import { matchTagAndColor } from '@/utils';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import Badge from '@/components/Badge';
+import TagBadge from '@/components/TagBadge';
 import ReactMarkdown from 'react-markdown';
 
 export const getStaticPaths = async () => {
@@ -38,12 +38,11 @@ export default function Post({
       <br />
       <div className='space-x-1'>
         {post.metadata.tags.map((tag: string, idx: number) => (
-          <Badge key={idx} color={matchTagAndColor(tag)} label={tag} />
+          <TagBadge key={idx} color={matchTagAndColor(tag)} label={tag} />
         ))}
       </div>
       <div className='mt-5 prose lg:prose-2xl prose-pre:bg-[#1E1E1E]'>
         <ReactMarkdown
-          children={post.markdown?.toString()} // eslint-disable-line react/no-children-prop
           components={{
             code({ node, inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || '');
@@ -51,10 +50,11 @@ export default function Post({
                 <SyntaxHighlighter
                   {...props}
                   style={vscDarkPlus}
-                  children={String(children).replace(/\n$/, '')} // eslint-disable-line react/no-children-prop
                   language={match[1]}
                   PreTag='div'
-                />
+                >
+                  {String(children).replace(/\n$/, '')}
+                </SyntaxHighlighter>
               ) : (
                 <code {...props} className={className}>
                   {children}
@@ -62,7 +62,9 @@ export default function Post({
               );
             },
           }}
-        />
+        > 
+        {post.markdown?.toString()}
+        </ReactMarkdown>
       </div>
     </section>
   );
