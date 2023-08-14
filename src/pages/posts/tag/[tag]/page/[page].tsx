@@ -3,6 +3,7 @@ import Pagination from '@/components/Pagination';
 import PostCard from '@/components/PostCard';
 import type { GetStaticPaths, GetStaticProps } from 'next';
 import type { Post } from '@/types/post';
+import TagSearch from '@/components/TagSearch';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const allTagList = await getAllTags();
@@ -24,6 +25,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
+  const allTagList = await getAllTags();
   const currentTag = ctx.params?.tag?.toString() ?? '';
   const currentPage = parseInt((ctx.params?.page?.toString() ?? '1'), 10) ;
   const numberOfPageByTag = await getNumberOfPageByTag(currentTag);
@@ -33,20 +35,22 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       posts,
       currentPage,
       currentTag,
-      numberOfPageByTag
+      numberOfPageByTag,
+      allTagList
     },
     revalidate: 60 * 60 * 6, // ISA 사용(6시간마다 갱신)
   };
 };
 
 interface BlogTagListProps {
+  allTagList: string[];
   currentPage: number;
   currentTag: string;
   numberOfPageByTag: number;
   posts: Post[];
 }
 
-export default function BlogTagPageList({ posts, currentPage, numberOfPageByTag, currentTag }: BlogTagListProps) {
+export default function BlogTagPageList({ allTagList, posts, currentPage, numberOfPageByTag, currentTag }: BlogTagListProps) {
   console.log('postByTag',posts)
   return (
     <main>
@@ -58,6 +62,9 @@ export default function BlogTagPageList({ posts, currentPage, numberOfPageByTag,
         </section>
         <section className="flex justify-center py-10">
           <Pagination currentPage={currentPage} totalPage={numberOfPageByTag} currentTag={currentTag} />
+        </section>
+        <section>
+          <TagSearch tagNames={allTagList} />
         </section>
       </div>
     </main>
