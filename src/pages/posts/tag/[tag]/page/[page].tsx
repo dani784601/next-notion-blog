@@ -17,7 +17,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
       });
     })
   )
-  console.log('params', params)
   return {
     paths: params,
     fallback: 'blocking',
@@ -26,6 +25,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const allTagList = await getAllTags();
+  console.log('ctx.params?.tag',ctx.params?.tag)
+  console.log('allTagList',allTagList)
   const currentTag = ctx.params?.tag?.toString() ?? '';
   const currentPage = parseInt((ctx.params?.page?.toString() ?? '1'), 10) ;
   const numberOfPageByTag = await getNumberOfPageByTag(currentTag);
@@ -51,7 +52,9 @@ interface BlogTagListProps {
 }
 
 export default function BlogTagPageList({ allTagList, posts, currentPage, numberOfPageByTag, currentTag }: BlogTagListProps) {
-  console.log('postByTag',posts)
+  console.log('allTagList',allTagList)
+  console.log('currentTag',currentTag)
+  
   return (
     <main>
       <div className='container h-screen min-w-full px-8'>
