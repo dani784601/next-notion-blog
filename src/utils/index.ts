@@ -4,7 +4,7 @@ export const matchTagAndColor = (tag: string) => {
       return 'badge-primary';
     case '엔지니어':
       return 'badge-secondary';
-    case '개인 사용자':
+    case '개인사용자':
       return 'badge-accent';
   }
 };
