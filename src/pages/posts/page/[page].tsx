@@ -8,8 +8,8 @@ import TagSearch from '@/components/TagSearch';
 export const getStaticPaths: GetStaticPaths = async () => {
   const numberOfPage = await getNumberOfPage();
   let params = [];
-  for(let i = 1; i <= numberOfPage; i++) {
-    params.push({params: { page: i.toString() }});
+  for (let i = 1; i <= numberOfPage; i++) {
+    params.push({ params: { page: i.toString() } });
   }
   return {
     paths: params,
@@ -27,7 +27,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       postByPage,
       currentPage,
       numberOfPage,
-      allTagList
+      allTagList,
     },
     revalidate: 60 * 60 * 6, // ISA 사용(6시간마다 갱신)
   };
@@ -40,22 +40,27 @@ interface BlogPageListProps {
   numberOfPage: number;
 }
 
-export default function BlogPageList({ postByPage, currentPage, numberOfPage, allTagList }: BlogPageListProps) {
+export default function BlogPageList({
+  postByPage,
+  currentPage,
+  numberOfPage,
+  allTagList,
+}: BlogPageListProps) {
   return (
     <main>
-      <div className='container h-screen min-w-full px-8'>
+      <section className='container h-screen min-w-full px-8'>
         <section className='grid max-w-4xl gap-2 mx-auto place-items-center'>
           {postByPage.map((post: Post) => (
             <PostCard post={post} key={post.id} />
           ))}
+          <section className='py-10'>
+            <Pagination currentPage={currentPage} totalPage={numberOfPage} />
+          </section>
+          <section className='w-full'>
+            <TagSearch tagNames={allTagList} />
+          </section>
         </section>
-        <section className="flex justify-center py-10">
-          <Pagination currentPage={currentPage} totalPage={numberOfPage} />
-        </section>
-        <section>
-          <TagSearch tagNames={allTagList} />
-        </section>
-      </div>
+      </section>
     </main>
   );
 }

@@ -61,7 +61,7 @@ export default function BlogTagPageList({ allTagList, posts, currentPage, number
         <section className="flex justify-center py-10">
           <Pagination currentPage={currentPage} totalPage={numberOfPageByTag} currentTag={currentTag} />
         </section>
-        <section>
+         <section className="flex justify-center py-10">
           <TagSearch tagNames={allTagList} />
         </section>
       </div>

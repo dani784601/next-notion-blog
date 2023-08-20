@@ -31,7 +31,7 @@ export default function Post({
 }) {
   console.log('markdown', post.markdown);
   return (
-    <section className='container px-5 mx-auto my-20 lg:px-2 lg:w-2/3'>
+    <section className='container px-5 mx-auto my-20 lg:px-2 lg:w-2/3 break-keep'>
       <h2 className='w-full text-2xl font-bold'>{post.metadata.title}</h2>
       <hr className='my-1' />
       <span className='text-gray-500'>Posted date at {post.metadata.date}</span>
@@ -41,7 +41,7 @@ export default function Post({
           <TagBadge key={idx} color={matchTagAndColor(tag)} label={tag} />
         ))}
       </div>
-      <div className='mt-5 prose lg:prose-2xl prose-pre:bg-[#1E1E1E]'>
+      <div className='mt-5 prose prose-pre:bg-[#1E1E1E] max-w-none'>
         <ReactMarkdown
           components={{
             code({ node, inline, className, children, ...props }) {
