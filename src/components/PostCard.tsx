@@ -7,7 +7,7 @@ export default function PostCard({post} : {post: Post}) {
   return (
     <article
       key={post.id}
-      className='w-full transition-all shadow-md glass hover:-translate-y-1 hover:shadow-lg card card-bordered'
+      className='w-full transition-all shadow-md hover:-translate-y-1 hover:shadow-lg card card-bordered'
     >
       <div className='card-body'>
         <div className='flex-col items-start card-title'>
