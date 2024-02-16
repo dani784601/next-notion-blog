@@ -29,8 +29,7 @@ export default function NavBar() {
   return (
     <nav className='navbar'>
         <div className='flex-1 p-2 text-xl font-semibold'>
-          {/* <Link href='/profile'>Dani</Link> */}
-          Dani
+            <Link href='/'>Dani</Link>
         </div>
         <div className='flex-none'>
           <ul className='px-1 menu menu-horizontal'>
